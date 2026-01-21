@@ -1,0 +1,270 @@
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap');
+/* font-family: "Lexend", sans-serif; */
+@import url('https://fonts.googleapis.com/css2?family=Yesteryear&display=swap');
+/* font-family: "Yesteryear", cursive; */
+html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(0, 0, 0);
+    color: white;
+    /* background-color: rgb(0, 0, 0); */
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3.5s ease-in-out;
+}
+
+body nav{
+    /* border: 1px solid red; */
+    position:fixed;
+    z-index: 2;
+    height: 5rem;
+    width: 99.9vw;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 15em;
+    backdrop-filter: blur(9px);
+}
+/* contain name and nav links till line number 78*/
+
+body nav .div1{
+    /* border: 1px solid yellow; */
+    width: 45vw;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+ /* links of navigation bar */
+body nav .nav_elements{
+    /* border: 1px solid; */
+    list-style: none;
+    width: 30vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+body nav .nav_elements li a{
+    font-family: "Lexend", sans-serif;
+    color: rgb(255, 255, 255);
+    font-size: medium;
+    list-style: none;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+body nav .nav_elements li a:hover{
+    color: rgb(157, 157, 157);
+    /* border-bottom: 0.5px solid rgb(129, 4, 232); */
+}
+
+body nav .navbtn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3vw;
+}
+
+/* purple btn of nav bar */
+.white_btn{
+    border-radius: 5px;
+    font-size: medium;
+    font-family: "Lexend", sans-serif;
+    border: 1.5px solid rgb(255, 255, 255);
+    background-color: transparent;
+    color: white;
+    /* width: 10em; */
+    /* height: 3em; */
+    padding: 10px;
+    transition: all 0.3s ease-in-out;
+}
+.white_btn:hover{
+    cursor: pointer;
+    background-color: white;
+    color: rgb(0, 0, 0);
+}
+body .mode{
+    /* position: fixed;
+    right: 30px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: transparent;
+    width: 3.4em;
+    height: 3.4em;
+    transition: all 0.5s ease-in-out;
+}
+body .mode:hover{
+    cursor: pointer;
+}
+body .mode img{
+    height: 25px;
+    border-radius: 100%;
+}
+
+/* menu button(img) hidden for big screen */
+body nav .menu{
+    position: fixed;
+    z-index: -1;
+    visibility: hidden;
+    height: 0;
+    width: 0;
+}
+
+body nav .sidemenu{
+    /* border: 1px soid rgb(0, 255, 68); */
+    list-style: none;
+    background-color: transparent;
+    visibility: hidden;
+    color: green;
+    position: fixed;
+    z-index: -10;
+    backdrop-filter: blur(10px);
+}
+
+
+
+/* nav for tablets */
+@media (max-width: 768px){
+    body nav{
+        display: flex;
+        width: 99.9vw;
+        justify-content: space-evenly;
+        gap: 20px;
+    }
+    body .mode{
+        height: 3.3em;
+        width: 3.3em;
+    }
+    
+    body nav .menu{
+        position: relative;
+        background: none;
+        z-index: 2;
+        border: 1px solid rgb(150, 150, 150);
+        border-radius: 100%;
+        height: 25px;
+        width: 25px;
+        visibility: visible;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+    }
+
+
+    body nav .nav_elements{
+        visibility: hidden;
+        height: 0;
+        width: 0;
+        position: fixed;
+        z-index: -3;
+    }
+
+    /* sibe menu bar */
+    body nav .sidemenu{
+        /* border-right: 1px solid greenyellow; */
+    
+        visibility: hidden;
+        width: 0vw;
+        height: 99vh;
+        padding-top: 12vh;
+
+        position: fixed;
+        left: 0px;
+        top: 0px;
+
+        z-index: 1;
+        
+        backdrop-filter: blur(100px);
+        transition: width 0.5s ease-in-out;
+    }
+
+    body nav .sidemenu ul{
+
+        margin-top: 1vh;
+        width: 100%;
+        font-size: medium;
+        list-style: none;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        gap: 1vh;
+    }
+    body nav .sidemenu ul li {
+        font-family: "Lexend", sans-serif;
+        
+    }
+    
+    body nav .sidemenu ul li a{
+        /* border: 1px solid; */
+        display: flex;
+        height: 7vh;
+        color: white;
+        width: 70vw;
+        backdrop-filter: blur(10px);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+    }
+
+}
+@media (max-width: 430px){
+    body nav .sidemenu{
+        /* border-right: 1px solid; */
+        visibility: hidden;
+        width: 0vw;
+        height: 100vh;
+    }
+
+    #talk-btn{
+        font-size: small; 
+        width: 35vw;
+        background-color: white;
+        color: black;
+    }
+    #mail-btn{
+        visibility: hidden;
+    }
+
+    body nav{
+        /* border: 1px solid; */
+        display: flex;
+        width: 99.9vw;
+        justify-content: space-between;
+        padding-left: 15px;
+    }
+    body .mode{
+        height: 0;
+        width: 0;
+        visibility: hidden;
+        position: fixed;
+        z-index: -100;
+    }
+    body nav .div1{
+        /* border: 1px solid; */
+        width: 30vw;
+        margin-right: 30px;
+    }
+    body .purple_btn{
+
+        margin-right: 30px;
+    }
+}
