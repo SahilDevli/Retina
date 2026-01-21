@@ -1,0 +1,58 @@
+.howto-section{
+    /* border: 1px solid red; */
+    padding:48px 0;
+    background:#0f0f10
+}
+ .howto-title{
+    font-size:42px;
+    color:#fff;
+    text-align:center;
+    margin:0
+}
+ .steps-grid{
+    /* border: 1px solid red; */
+    display:grid;
+    grid-template-rows:repeat(3,1fr);
+    gap:18px;
+    margin-top:28px
+}
+ .step-card{
+    cursor: default;
+    background:linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+    padding:28px;
+    border-radius:16px;
+    border:1px solid rgba(255,255,255,0.06);
+    font-size:18px;
+}
+ .step-num{
+    width:42px;
+    height:42px;
+    border-radius:10px;
+    background:#0b0b0b;
+    border:1px solid rgba(255,255,255,0.03);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+    margin-bottom:10px;
+    font-size: large;
+}
+ .step-title{
+    font-size:22px;
+    margin:0 0 8px 0
+}
+ .step-text{
+    color:var(--muted);
+    font-size:18px;
+    line-height:1.5
+}
+ @media (max-width:1000px){
+     .steps-grid{
+        grid-template-columns:repeat(2,1fr)
+    }
+}
+ @media (max-width:600px){
+     .steps-grid{
+        grid-template-columns:1fr
+    }
+}
