@@ -7,11 +7,9 @@ import AboutDiseases from "./components/AboutDiseases";
 import ChatBot from "./components/Chatbot";
 import Appli from "./components/ApplicationPage";
 
-
 export default function App() {
   return (
     <Routes>
-
       {/* Landing Page */}
       <Route
         path="/"
@@ -32,7 +30,6 @@ export default function App() {
 
       {/* Chat bot */}
       <Route path="/chatbot" element={<ChatBot />} />
-
     </Routes>
   );
 }

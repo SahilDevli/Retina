@@ -116,6 +116,16 @@
     background:linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
     box-shadow:0 20px 50px rgba(0,0,0,0.7);
 }
+.resend-otp{
+    border: none;
+    background-color: transparent;
+    color: white;
+    transition: all 0.3s ease;
+}.resend-otp:hover{
+    margin-top: 2px;
+    color: rgb(48, 126, 244);
+    /* text-decoration: underline; */
+}
 @media (max-width:900px){
      .login-inner{
         flex-direction:column

@@ -1,24 +1,35 @@
 import nodemailer from "nodemailer";
 
-export const sendOtpEmail = async (to, otp) => {
-  const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
-    }
-  });
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    // user: process.env.GMAIL_USER,
+    // pass: process.env.GMAIL_PASS
+    user: "web99servicesformail@gmail.com",
+    pass: "pdgz czax jeqa jbzf"
+  }
+});
 
-  await transporter.sendMail({
-    from: `"OTP Service" <${process.env.EMAIL_USER}>`,
-    to,
-    subject: "Your OTP Code",
-    html: `
-      <h2>Your OTP</h2>
-      <p><b>${otp}</b></p>
-      <p>Expires in 5 minutes</p>
-    `
-  });
+export const sendOtpEmail = async (to, otp) => {
+  try {
+    const info = await transporter.sendMail({
+      from: `"OTP Service" < web99servicesformail@gmail.com >`,
+      to,
+      subject: "Your OTP Code",
+      html: `
+        <div style="font-family: Arial; text-align:center;">
+          <h2>OTP Verification</h2>
+          <p>Your OTP is:</p>
+          <h1 style="letter-spacing: 5px;">${otp}</h1>
+          <p>This OTP expires in 5 minutes</p>
+        </div>
+      `
+    });
+
+    return info;
+
+  } catch (error) {
+    console.error("Email failed:", error);
+    throw new Error("Email sending failed");
+  }
 };

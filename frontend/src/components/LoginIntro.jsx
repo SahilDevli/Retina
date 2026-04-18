@@ -1,105 +1,172 @@
-import React, { useState } from 'react'
-import '../styles/LoginIntro.css'
+import React, { useState } from "react";
+import "../styles/LoginIntro.css";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion"
+import { motion } from "framer-motion";
 
 import api from "../api/axios";
+import Docter from "./Docter.webp";
 
-import Docter from './Docter.webp';
+export default function LoginIntro() {
+  const [showOtp, setShowOtp] = useState(false);
+  const [contact, setContact] = useState("");
+  const [otp, setOtp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [err, setErr] = useState("");
 
-export default function LoginIntro(){
+  const navigate = useNavigate();
 
-    const [showOtp, setShowOtp] = useState(false);
-    const [contact, setContact] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [err, setErr] = useState("");
+  const sendOtp = async () => {
+    if (loading) return;
 
-    const navigate = useNavigate();
+    setErr("");
 
-    // -------------------------
-    // --- SEND OTP FUNCTION ---
-    // -------------------------
-    const sendOtp = async () => {
-      setErr("");
-    
-      if (!contact.trim()) {
-        setErr("Please enter email or phone number.");
-        return;
-      }
-    
-      setLoading(true);
-    
-      try {
-        const { data } = await api.post("/send-otp", { contact });
-    
+    if (!contact.trim()) {
+      setErr("Please enter email.");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(contact)) {
+      setErr("Please enter a valid email.");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const { data } = await api.post("/send-otp", { contact });
+
+      if (data.success) {
         setShowOtp(true);
-    
-      } catch (error) {
-        if (error.response) {
-          // Backend responded with error
-          setErr(error.response.data.message || "Failed to send OTP");
-        } else {
-          // Network / server down
-          setErr("Server not responding");
-        }
-      } finally {
-        setLoading(false);
+      } else {
+        setErr(data.message || "Failed to send OTP");
       }
-    };
-    
+    } catch (error) {
+      if (error.response) {
+        setErr(error.response?.data?.message || "Failed to send OTP");
+      } else {
+        setErr("Server not responding");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  const verifyOtp = async () => {
+    if (loading) return;
 
-    return (
-        <section className="login-intro">
-            <div className="login-inner container">
+    setErr("");
 
-                <img src={Docter} alt='abc' className='docSab' title='Greetings, I am Retina'/>
+    if (!otp.trim()) {
+      setErr("Please enter OTP");
+      return;
+    }
 
-                <motion.div className="intro-left"
-                    initial={{ opacity: 1, x: 0 }}
-                    whileInView={{ opacity: 1, x: 1 }}
-                    transition={{ duration: 0.5 }}>
+    setLoading(true);
 
-                    <h1 className="mv-title">Retina</h1>
-                    <p className="mv-sub">An Integrated Deep Learning System for <span>Comprehensive Ocular Disease</span>.</p>
+    try {
+      const { data } = await api.post("/verify-otp", {
+        contact,
+        otp
+      });
 
-                    <div className="login-card">
+      if (data.success) {
+        navigate("/chatbot");
+      } else {
+        setErr(data.message || "Invalid OTP");
+      }
+    } catch (error) {
+      if (error.response) {
+        setErr(error.response?.data?.message || "Invalid OTP");
+      } else {
+        setErr("Server not responding");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
-                        <label className="label">Email or Indian phone number</label>
+  return (
+    <section className="login-intro">
+      <div className="login-inner container">
+        <img
+          src={Docter}
+          alt="doctor"
+          className="docSab"
+          title="Greetings, I am Retina"
+        />
 
-                        <input
-                            value={contact}
-                            onChange={e => setContact(e.target.value)}
-                            className="input"
-                            placeholder="example@mail.com or 9123456789"
-                        />
+        <motion.div
+          className="intro-left"
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <h1 className="mv-title">Retina</h1>
 
-                        {/* ERROR MESSAGE */}
-                        {err && <p className="error-text">{err}</p>}
+          <p className="mv-sub">
+            An Integrated Deep Learning System for{" "}
+            <span>Comprehensive Ocular Disease</span>.
+          </p>
 
-                        {/* SEND OTP */}
-                        {!showOtp ? (
-                            <button className="btn-primary" onClick={sendOtp} disabled={loading}>
-                                {loading ? "Sending..." : "Send OTP"}
-                            </button>
-                        ) : (
-                            <div className="otp-row">
-                                <input className="otp-input" placeholder="Enter OTP" />
-                                <button className="btn-primary small">Next ›</button>
-                            </div>
-                        )}
+          <div className="login-card">
+            <label className="label">Email</label>
 
-                        <div className="login-hint">We accept emails and Indian numbers (+91 format). Your data stays private.</div>
+            <input
+              value={contact}
+              onChange={(e) => setContact(e.target.value)}
+              className="input"
+              placeholder="example@mail.com"
+              disabled={showOtp}
+            />
 
-                        <p><center>——————or——————</center></p>
+            {err && <p className="error-text">{err}</p>}
 
-                        <button className='btn-primary' onClick={() => navigate("/model")}>🦾Try Retina</button>
+            {!showOtp ? (
+              <button
+                className="btn-primary"
+                onClick={sendOtp}
+                disabled={loading}
+              >
+                {loading ? "Sending..." : "Send OTP"}
+              </button>
+            ) : (
+              <div className="otp-row">
+                <input
+                  className="otp-input"
+                  placeholder="Enter OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
 
-                    </div>
+                <button
+                  className="btn-primary small"
+                  onClick={verifyOtp}
+                  disabled={loading}
+                >
+                  {loading ? "Verifying..." : "Next ›"}
+                </button>
+              </div>
+            )}
 
-                </motion.div>
+            {showOtp && (
+              <button className="resend-otp" onClick={sendOtp}>
+                Resend OTP
+              </button>
+            )}
 
+            <div className="login-hint">
+              We accept valid emails. Your data stays private.
             </div>
-        </section>
-    )
+
+            <p style={{ textAlign: "center" }}>——————or——————</p>
+
+            <button className="btn-primary" onClick={() => navigate("/model")}>
+              Try Retina ↗
+            </button>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
 }
